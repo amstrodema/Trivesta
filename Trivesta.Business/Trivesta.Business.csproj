@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\App.Services\App.Services.csproj" />
+    <ProjectReference Include="..\Trivesta.Data\Trivesta.Data.csproj" />
+    <ProjectReference Include="..\Trivesta.Model\Trivesta.Model.csproj" />
+  </ItemGroup>
+
+</Project>

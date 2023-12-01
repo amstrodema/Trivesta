@@ -1,0 +1,152 @@
+﻿@model Trivesta.Model.ViewModel.RoomsVM
+@{
+    ViewData["Title"] = "Create New Room";
+}
+
+<div class="push-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form id="createformID">
+                    <div class="row">
+                        <div class="col-lg-6 order-2 order-md-1 align-self-center">
+                            <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                                <div class="row room-form">
+                                    <div class="col-lg-12">
+                                        <small class="bold uppercase text-muted">Public - Users and Guests can join</small>
+                                        <hr />
+
+                                        <input class="form-control" placeholder="Room Name" required />
+                                        <div class="row mb-2">
+                                            <div class="col-6">
+                                                <select class="form-control" onchange="ChangedRentType()" id="rentType" required>
+                                                    <option value="">- Select Rent Type -</option>
+                                                    <option value="true">Free Entry</option>
+                                                    <option value="false">Paid Entry</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6 hidden" id="roomCostHolder">
+                                                <input class="form-control" placeholder="Room Amount" id="roomCostVal" min="1" value="@Model.Cost" onblur="Validate()" type="number" />
+                                            </div>
+                                            <div class="col-6 hidden" id="rentFrequencyHolder">
+                                                <select class="form-control" id="rentFrequency">
+                                                    <option value="">- Select Rent Frequency -</option>
+                                                    <option value="Lifetime">Lifetime</option>
+                                                    <option value="Hourly">Hourly</option>
+                                                    <option value="Daily">Daily</option>
+                                                    <option value="Weekly">Weekly</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6 ">
+                                                <input class="form-control" placeholder="Rent Amount" id="rent" onblur="Validate()" type="number" required />
+                                            </div>
+                                        </div>
+                                        <textarea class="form-control mb-3" placeholder="Room Description" required></textarea>
+                                        <select class="form-control" id="genderLimit" required>
+                                            <option value="false">Not Default</option>
+                                            <option value="true">Default Room</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <small>This room will cost <span id="roomCost">0</span>coins (max rent: <span id="maxRent">0</span>coins)</small><br />
+                                            <small>Max rent is 10% or less of room fee</small>
+                                        </p>
+                                        <p class="bold">Room cannot be modified once created</p>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="gradient-button">
+                                            <a asp-action="index" asp-controller="room" asp-route-t="classy">Random Room <i class="fa fa-plug"></i></a>
+                                            <label for="submmitBtn"><a class="pointer">Create Room <i class="fa fa-plus"></i></a></label>
+                                            <button type="submit" class="hidden" id="submmitBtn" onsubmit="return(Validate())"></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 order-1 order-md-2 mb-5">
+                            <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                                <img src="../assets/images/slider-dec.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var cost = '@Model.Cost';
+
+    function Validate(){
+        var maxRent = document.getElementById("maxRent");
+        var rentType = document.getElementById("rentType");
+        var rent = document.getElementById("rent");
+        var roomCost = document.getElementById("roomCost");
+        var roomCostVal = document.getElementById("roomCostVal");
+        var rentFrequency = document.getElementById("rentFrequency");
+        cost = roomCostVal.value * 1;
+
+        if (cost < 1){
+            cost = 1;
+            roomCostVal.value = 1;
+        }
+       
+        if (rentType.value != "false") {
+            rent.value = 0;
+            maxRent.innerText = 0;
+        }else{
+            roomCost.innerText = cost;
+            var per = cost*10/100;
+
+            if (rent.value > per){
+                rent.value = per;
+            }
+
+            maxRent.innerText = per;
+
+            if (rentFrequency.value == ""){
+                alertDanger("Set rent frequency");
+                return false;
+            }
+        }
+    }
+
+    function ChangedRentType(){
+        
+        var rentType = document.getElementById("rentType");
+        var roomCost = document.getElementById("roomCost");
+        var roomCostVal = document.getElementById("roomCostVal");
+        var rent = document.getElementById("rent");
+
+        var roomCostHolder = document.getElementById("roomCostHolder");
+        var rentFrequencyHolder = document.getElementById("rentFrequencyHolder");
+
+        if (rentType.value == "false"){
+            var per = cost * 10 / 100;
+            maxRent.innerText = per;
+
+            roomCost.innerText = cost;
+            if (rentFrequencyHolder.classList.contains("hidden")) {
+                rentFrequencyHolder.classList.remove("hidden")
+            }
+            if (roomCostHolder.classList.contains("hidden")) {
+                roomCostHolder.classList.remove("hidden")
+            }
+        }else{
+            if (!rentFrequencyHolder.classList.contains("hidden")) {
+                rentFrequencyHolder.classList.add("hidden")
+            }
+            if (!roomCostHolder.classList.contains("hidden")) {
+                roomCostHolder.classList.add("hidden")
+            }
+
+            roomCost.innerText = 0;
+            rent.value = 0;
+        }
+    }
+</script>

@@ -1,0 +1,57 @@
+.bold {
+    font-weight: bold !important
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.overflowhidden {
+    overflow: hidden !important
+}
+
+.capital {
+    text-transform: capitalize;
+}
+
+.pointer {
+    cursor: pointer
+}
+
+.hidden {
+    display: none !important
+}
+
+.alertFloater {
+    color: white;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    bottom: 3em;
+    padding: 1em;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 10px 0px;
+    font-family: 'Poppins';
+    font-size: 14px;
+    right: 20px;
+    max-width: 15em;
+    max-height: 4em;
+    overflow: hidden;
+    padding-bottom: 2em
+}
+
+.alertSuccess {
+    background-color: rgba(0, 105, 0, 0.8) !important;
+}
+
+.alertDanger {
+    background-color: rgba(255, 0, 0, 0.8) !important;
+}
+
+.alertWarning {
+    background-color: rgba(255, 150, 0, 0.7) !important;
+}
+.vertical-center {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: calc(100% - 1rem) !important;
+}

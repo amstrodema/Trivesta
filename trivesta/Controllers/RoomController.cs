@@ -4,8 +4,21 @@ namespace trivesta.Controllers
 {
     public class RoomController : Controller
     {
-        public IActionResult Index()
+        [Route("/room")]
+        public IActionResult Index(string type)
         {
+            if (string.IsNullOrEmpty(type))
+            {
+
+            }
+            return View();
+        }
+        public IActionResult Chat(string roomID)
+        {
+            if (string.IsNullOrEmpty(roomID))
+            {
+
+            }
             return View();
         }
     }

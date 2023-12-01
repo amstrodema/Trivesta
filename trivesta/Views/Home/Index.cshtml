@@ -1,5 +1,8 @@
-﻿@{
+﻿@using trivesta.Services;
+@inject LoginValidator loginValidator
+@{
     ViewData["Title"] = "Home Page";
+    var user = await loginValidator.GetUserAuth();
 }
 
 <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -16,10 +19,10 @@
                                            </div>
                                 <div class="col-lg-12">
                                     <div class="white-button first-button scroll-to-section">
-                                        <a id="modal_trigger" href="#modal">Sign Up <i class="fa fa-user"></i></a>
+                                        <a asp-action="index" asp-controller="rooms">Rooms <i class="fa fa-users"></i></a>
                                     </div>
                                     <div class="white-button scroll-to-section">
-                                        <a href="#contact">Instant Chat <i class="fa fa-comment"></i></a>
+                                        <a asp-action="random" asp-controller="rooms">Instant Chat <i class="fa fa-comment"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -54,9 +57,9 @@
                 <div class="service-item first-service">
                     <div class="icon"></div>
                     <h4>Public Rooms</h4>
-                    <p>You are not allowed to redistribute this template ZIP file on any other website.</p>
+                    <p>This is like stepping into a vibrant virtual hangout that's open to you and everyone else, including guests.</p>
                     <div class="text-button">
-                        <a href="#">View Rooms <i class="fa fa-arrow-right"></i></a>
+                        <a asp-action="index" asp-controller="rooms" asp-route-t="public">View Rooms <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -64,9 +67,9 @@
                 <div class="service-item second-service">
                     <div class="icon"></div>
                     <h4>Private Rooms</h4>
-                    <p>You are allowed to use the Chain App Dev HTML template. Feel free to modify or edit this layout.</p>
+                    <p>This room is open to you and everyone else, except guests. Owners may or may not demand rent from users</p>
                     <div class="text-button">
-                        <a href="#">View Rooms <i class="fa fa-arrow-right"></i></a>
+                        <a asp-action="index" asp-controller="rooms" asp-route-t="private">View Rooms <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -74,9 +77,9 @@
                 <div class="service-item third-service">
                     <div class="icon"></div>
                     <h4>Classy Rooms</h4>
-                    <p>If this template is beneficial for your work, please support us <a rel="nofollow" href="https://paypal.me/templatemo" target="_blank">a little via PayPal</a>. Thank you.</p>
+                    <p>Higher standard for users who appreciate elevated vibes. It's a space where exclusivity meets sophistication</p>
                     <div class="text-button">
-                        <a href="#">View Rooms <i class="fa fa-arrow-right"></i></a>
+                        <a asp-action="index" asp-controller="rooms" asp-route-t="classy">View Rooms <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -84,9 +87,9 @@
                 <div class="service-item fourth-service">
                     <div class="icon"></div>
                     <h4>Personal Rooms</h4>
-                    <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
+                    <p>Cozy corners designed just for you. Intimate one-on-one or small group conversations, ensuring a confidential setting for personal talks</p>
                     <div class="text-button">
-                        <a href="#">View Rooms <i class="fa fa-arrow-right"></i></a>
+                        <a asp-action="index" asp-controller="rooms" asp-route-t="personal">View Rooms <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -94,57 +97,7 @@
     </div>
 </div>
 
-<div id="about" class="about-us section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 align-self-center">
-                <div class="section-heading">
-                    <h4>Discover <em>What We Do</em> &amp; Who We Are</h4>
-                    <img src="assets/images/heading-line-dec.png" alt="">
-                    <p>We made messaging and chatting easier for all new and existing users. Simply use our default rooms as advantage to catch up!</p>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="box-item">
-                            <h4><a href="#">General Room</a></h4>
-                            <p>Everybody talks here</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="box-item">
-                            <h4><a href="#">Singles Room</a></h4>
-                            <p>Meet the singles</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="box-item">
-                            <h4><a href="#">Friendship Room</a></h4>
-                            <p>Meet a friend</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="box-item">
-                            <h4><a href="#">Lovers Room (18+)</a></h4>
-                            <p>Find love here</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <p>You are soley responsibile for any information shared in any room, discussion or conversation anywhere on this platform.</p>
-                        <div class="gradient-button">
-                            <a href="#">Buy Coins Now</a>
-                        </div>
-                        <span>Instant payment and recharge</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="right-image">
-                    <img src="assets/images/about-right-dec.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<partial name="_DefaultRoom" />
 
 <div id="clients" class="the-clients">
     <div class="container">
@@ -153,7 +106,7 @@
                 <div class="section-heading">
                     <h4>See What <em>Top Performing</em> Rooms Are Doing</h4>
                     <img src="assets/images/heading-line-dec.png" alt="">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eismod tempor incididunt ut labore et dolore magna.</p>
+                    <p>Jump into the coolest chat spots and discover why the best ones shine! From lively discussions to innovative vibes, these chat rooms are where the real magic unfolds</p>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -426,7 +379,10 @@
                         <li>2-Weeks Free Decay Shield</li>
                     </ul>
                     <div class="border-button">
-                        <a href="#">Purchase This Plan Now</a>
+                        @if (user != null)
+                        {
+                            <a onclick="makePayment('@Model.PubKey','@Guid.NewGuid()','1200','@user.Email', '@user.Username')">Purchase This Plan Now</a>
+                        }
                     </div>
                 </div>
             </div>
@@ -445,7 +401,10 @@
                         <li>1-Months Free Decay Shield</li>
                     </ul>
                     <div class="border-button">
-                        <a href="#">Purchase This Plan Now</a>
+                        @if (user != null)
+                        {
+                            <a onclick="makePayment('@Model.PubKey','@Guid.NewGuid()','5000','@user.Email', '@user.Username')">Purchase This Plan Now</a>
+                        }
                     </div>
                 </div>
             </div>
@@ -464,7 +423,9 @@
                         <li>3-Months Free Decay Shield</li>
                     </ul>
                     <div class="border-button">
-                        <a href="#">Purchase This Plan Now</a>
+                        @if(user != null){
+                            <a onclick="makePayment('@Model.PubKey','@Guid.NewGuid()','15000','@user.Email', '@user.Username')">Purchase This Plan Now</a>
+                        }                        
                     </div>
                 </div>
             </div>
@@ -472,3 +433,4 @@
     </div>
 </div>
 
+<script src="https://checkout.flutterwave.com/v3.js"></script>

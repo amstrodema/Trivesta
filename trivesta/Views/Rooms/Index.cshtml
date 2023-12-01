@@ -1,0 +1,59 @@
+﻿@model Trivesta.Model.ViewModel.RoomsVM
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6 align-self-center">
+                        <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h2>There Is No Limits To Expression!</h2>
+                                    <p>Create or join a room instantly and dive into the vibrant world of connections, laughter, and shared moments. Don't let the excitement pass you by. </p>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="white-button first-button scroll-to-section">
+                                        <a asp-action="random" asp-controller="rooms">Join Room<i class="fa fa-plug"></i></a>
+                                    </div>
+                                    <div class="white-button scroll-to-section">
+                                        <a asp-action="create" asp-controller="rooms" asp-route-t="public">Create Room <i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="col-lg-6 flair">
+                            <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                                <img src="./assets/images/svg/review2.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="services" class="services section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
+                    <h4>Room Owners <em>May Charge Rent &amp; Earn</em> Coins Easily</h4>
+                    <img src="assets/images/heading-line-dec.png" alt="">
+                    <p>The more vistors in your room, the higher you earn coins</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_DefaultRoom" model="Model" />
+<partial name="_PublicRoom" model="Model" />
+<partial name="_PrivateRoom" model="Model" />
+<partial name="_ClassyRoom" model="Model" />
+<partial name="_PersonalRoom" model="Model" /> 

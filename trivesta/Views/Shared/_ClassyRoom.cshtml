@@ -1,0 +1,39 @@
+﻿@model Trivesta.Model.ViewModel.RoomsVM
+
+<div id="about" class="about-us section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 align-self-center">
+                <div class="section-heading">
+                    <h4>Classy Rooms <em>Are For</em> Only A Few Sects</h4>
+                    <img src="assets/images/heading-line-dec.png" alt="">
+                    <p>Higher standard for users who appreciate elevated vibes. It's a space where exclusivity meets sophistication. The Bars are high!</p>
+                </div>
+                <div class="row">
+                    @if (string.IsNullOrEmpty(Model.t))
+                    {
+                        <partial name="_RoomList" />
+                    }
+                    else
+                    {
+                        <partial name="_RoomList2" />
+                    }
+                    @if (string.IsNullOrEmpty(Model.t))
+                    {
+                        <div class="col-lg-12">
+                            <p>You are soley responsibile for any information shared in any room, discussion or conversation anywhere on this platform.</p>
+
+                            <div class="gradient-button">
+                                <a asp-action="index" asp-controller="rooms" asp-route-t="classy">More Classy Rooms</a>
+                                <a asp-action="create" asp-controller="rooms" asp-route-t="classy">Create New Room</a>
+
+                            </div>
+
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

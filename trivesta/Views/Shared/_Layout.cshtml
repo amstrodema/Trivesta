@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
+    <link rel="shortcut icon" type="image/x-icon" href="./assets/images/logo2.png">
+    <link rel="stylesheet" href="~/css/app-style.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
     <!-- Additional CSS Files -->
@@ -21,7 +22,7 @@
     <!-- Bootstrap core CSS -->
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body id="alertMe">
       <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -43,20 +44,20 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
-              <img src="assets/images/logo.png" alt="Chain App Dev">
+                        <a asp-action="index" asp-controller="home" class="logo">
+              <img src="../assets/images/logo.png" alt="Trivesta">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-              <li class="scroll-to-section"><a href="#services">Services</a></li>
-              <li class="scroll-to-section"><a href="#about">About</a></li>
-              <li class="scroll-to-section"><a href="#pricing">Pricing</a></li>
-              <li class="scroll-to-section"><a href="#newsletter">Newsletter</a></li>
-              <li><div class="gradient-button"><a id="modal_trigger" href="#modal"><i class="fa fa-sign-in-alt"></i> Sign In Now</a></div></li> 
-            </ul>        
-            <a class='menu-trigger'>
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a asp-action="index" asp-controller="home" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a asp-action="index" asp-controller="rooms">Rooms</a></li>
+                            <li class="scroll-to-section"><a href="/#services">Services</a></li>
+                            <li class="scroll-to-section"><a href="/#about">About</a></li>
+                            <li class="scroll-to-section"><a href="/#pricing">Pricing</a></li>
+                            <li><div class="gradient-button"><a id="modal_trigger" href="#modal"><i class="fa fa-sign-in-alt"></i> Sign In Now</a></div></li>
+                        </ul>
+                        <a class='menu-trigger'>
                 <span>Menu</span>
             </a>
             <!-- ***** Menu End ***** -->
@@ -161,7 +162,7 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <div class="section-heading">
-                        <h4>Join our mailing list to receive offers, news &amp; latest trends</h4>
+                        <h4>Receive offers, news &amp; latest trends</h4>
                     </div>
                 </div>
                 <div class="col-lg-6 offset-lg-3">
@@ -186,7 +187,7 @@
                     <div class="footer-widget">
                         <h4>Contact Us</h4>
                         <p>No 23 Egbeda LGA Avenue, opposite sazo filling station. Ibadan</p>
-                        <p><a href="#">08137395582</a></p>
+                        <p><a href="tel:+2348137395582">+234 813 739 5582</a></p>
                         <p><a href="mailto:info@trivesta.com">info@trivesta.com</a></p>
                     </div>
                 </div>
@@ -230,13 +231,13 @@
                         <div class="logo">
                             <img src="assets/images/white-logo.png" alt="">
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                        <p>Beyond chat, we're a lively community fostering seamless interaction, innovation, and fun. Join us in redefining how people connect!</p>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="copyright-text">
                         <p>
-                            Trivesta. A product of Salmatra Global Company
+                            Trivesta is a product of Salmatra Global Company
                             <br>&copy; 2023 - <a href="#" target="_blank">D'arlos Valley</a>
                         </p>
                     </div>
@@ -252,6 +253,8 @@
     <script src="~/assets/js/imagesloaded.js"></script>
     <script src="~/assets/js/popup.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <script src="~/js/app-script.js"></script>
+    <script src="~/js/site.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

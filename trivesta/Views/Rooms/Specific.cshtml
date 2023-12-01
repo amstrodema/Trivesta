@@ -1,0 +1,26 @@
+﻿@model Trivesta.Model.ViewModel.RoomsVM
+@{
+    ViewData["Title"] = "Profile";
+}
+
+
+@if (Model.t != "personal")
+{
+    <partial name="_DefaultRoom" model="Model"/>
+}
+@if (Model.t == "personal")
+{
+    <partial name="_PersonalRoom" model="Model" />
+}
+else if (Model.t == "classy")
+{
+    <partial name="_ClassyRoom" model="Model" />
+}
+else if (Model.t == "private")
+{
+    <partial name="_PrivateRoom" model="Model" />
+}
+else
+{
+    <partial name="_PublicRoom" model="Model" />
+}

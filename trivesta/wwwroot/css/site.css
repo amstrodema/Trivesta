@@ -17,6 +17,75 @@ body {
   margin-bottom: 60px;
 }
 
-.right-image img{
-    width:30em
+
+.right-image img {
+    width: 30em
+}
+.push-banner{
+    padding-top:11em
+}
+.forceGraft .box-item{
+    border-radius:unset !important;
+    overflow:hidden;
+    height:6.5em;
+    white-space:nowrap !important;
+    overflow:hidden;
+    padding-left:0 !important;
+    padding-right:0 !important
+}
+.forceGraft .box-item:hover{
+   background-color: rgba(255,255,255,0.8)
+}
+
+
+.forceGraft {
+   
+}
+.chatHolder {
+    overflow-y: scroll;
+    height: 63vh;
+}
+.chatboard {
+    height: 35em;
+}
+.chatboard section{
+   margin-bottom:1em;
+}
+.chat-item {
+    display: inline-block;
+    max-width: 60%;
+    padding: 0.7em;
+    border-radius: 0.2em;
+    box-shadow: rgba(0,0,0,0.1) 1px 1px 3px;
+    padding-bottom:0;
+    overflow:hidden
+}
+.chat-item h6{
+   font-weight: bold;
+    font-size:12px;
+    white-space:nowrap;
+}
+.chat-item p{
+    font-size:12px;
+    margin-top:-0.4em;
+    line-height:16px
+}
+.chatInput{
+
+}
+.chatInput input{
+    border:none;
+    height:3em;
+    width:50%;
+    background-color: #eee;
+    padding: 0.5em;
+    display:inline !important
+}
+.chatInput input:focus, .chatInput input:active, .chatInput input:hover {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: #eee;
+}
+.room-form input{
+    margin-bottom:0.5em
 }
