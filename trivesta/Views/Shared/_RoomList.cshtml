@@ -1,25 +1,21 @@
-﻿@model Trivesta.Model.ViewModel.RoomsVM
-<div class="col-lg-4">
-    <div class="box-item">
-        <h4><a href="#">General Room</a></h4>
-        <p>Everybody talks here</p>
+﻿@model IEnumerable<Trivesta.Model.Room>
+@foreach (var room in Model)
+{
+    <div class="col-lg-4">
+        <div class="box-item">
+            <h4><a asp-action="index" asp-controller="room" asp-route-t="@room.Tag">@room.Name</a></h4>
+            @try
+            {
+                <p>@room.Description.Substring(0,30)</p>
+            }
+            catch (Exception)
+            {
+                <p>@room.Description</p>
+            }
+        </div>
     </div>
-</div>
-<div class="col-lg-4">
-    <div class="box-item">
-        <h4><a href="#">Singles Room</a></h4>
-        <p>Meet the singles</p>
-    </div>
-</div>
-<div class="col-lg-4">
-    <div class="box-item">
-        <h4><a href="#">Friendship Room</a></h4>
-        <p>Meet a friend</p>
-    </div>
-</div>
-<div class="col-lg-4">
-    <div class="box-item">
-        <h4><a href="#">Lovers Room (18+)</a></h4>
-        <p>Find love here</p>
-    </div>
-</div>
+}
+@if (Model.Count() < 1)
+{
+    <partial name="_NoContent" />
+}

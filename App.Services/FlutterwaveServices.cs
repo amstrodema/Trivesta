@@ -46,11 +46,6 @@ namespace App.Services
                 Encryption = "894363394ecdee6e3ae94c84";
             }
 
-            _httpClient = httpClientFactory.CreateClient();
-            // Replace 'YOUR_SECRET_KEY' with your actual secret key
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + ScKey);
-            _httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
-
         }
         public static ResponseMessage<string> Pay(User user, string cardNo, string cvv, string expiry, string tranxRef, int amt, string pin)
         {

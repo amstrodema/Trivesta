@@ -9,5 +9,6 @@ namespace Trivesta.Data.Interface
 {
     public interface ICoinTransaction : IGeneric<CoinTransaction>
     {
+        Task<IEnumerable<CoinTransaction>> GetByUserID(Guid userID);
     }
 }

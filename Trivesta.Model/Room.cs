@@ -4,8 +4,8 @@
     {
         public Guid ID { get; set; }
         public Guid RoomTypeID { get; set; }
-        public string RoomTypeTag { get; set; }
-        public string RoomType { get; set; }
+        public string RoomTypeTag { get; set; } = string.Empty;
+        public string RoomType { get; set; } = string.Empty;
         public string Tag { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Code { get; set; } = string.Empty;
@@ -19,9 +19,10 @@
         public string ReligiousLimit { get; set; } = string.Empty;
         public string GenderLimit { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
-        public string IsDefault { get; set; } = string.Empty;
+        public bool IsDefault { get; set; }
         public bool IsFree { get; set; }
         public bool IsBarred { get; set; }
+        public bool IsFake { get; set; }
 
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }

@@ -9,5 +9,6 @@ namespace Trivesta.Data.Interface
 {
     public interface IRoomType : IGeneric<RoomType>
     {
+        Task<RoomType> GetByTag(string tag);
     }
 }

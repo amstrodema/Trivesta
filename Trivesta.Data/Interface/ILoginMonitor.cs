@@ -11,5 +11,7 @@ namespace Trivesta.Data.Interface
     {
         Task<LoginMonitor> GetMonitorByUserID(Guid userID, Guid appID);
         Task<LoginMonitor> GetMonitorByUserIDOnly(Guid userID);
+        Task<LoginMonitor> GetMonitorByGuest(string guest);
+        Task<LoginMonitor> GetMonitorByUserIDOrGuest(Guid userID, Guid appID, string username);
     }
 }

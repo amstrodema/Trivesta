@@ -16,6 +16,11 @@ namespace trivesta.Services
             _unitOfWork = unitOfWork;
         }
 
+        public void SetSession(string key, string json)
+        {
+            _context.HttpContext.Session.SetString(key, json);
+        }
+
         public IHttpContextAccessor Context() { return _context; }
 
         public async Task<bool> IsLoggedInAuth()
@@ -187,7 +192,7 @@ namespace trivesta.Services
                 string str = val == null ? "" : val;
                 User? user = JsonConvert.DeserializeObject<User>(str);
 
-                if (user == null || user.IsBanned || !user.IsActive || (SingletonBusiness.IsLocked && !user.IsDev))
+                if (user == null || user.IsBanned || !user.IsMailVerified || !user.IsActive || (SingletonBusiness.IsLocked && !user.IsDev))
                 {
                     return null;
                 }

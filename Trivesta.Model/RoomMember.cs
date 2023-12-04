@@ -6,5 +6,7 @@
         public Guid RoomID { get; set; }
         public Guid UserID { get; set; }
         public int Duration { get; set; } //in hours
+        public DateTime DateCreated { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

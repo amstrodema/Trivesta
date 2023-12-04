@@ -29,6 +29,7 @@ namespace trivesta.Services
                 .AddTransient<ILoginMonitor, LoginMonitorRepository>()
                 .AddTransient<INotification, NotificationRepository>()
 
+                .AddScoped<GeneralBusiness>()
                 .AddScoped<NotificationBusiness>()
                 .AddScoped<SingletonBusiness>()
                 .AddScoped<RoomBusiness>()

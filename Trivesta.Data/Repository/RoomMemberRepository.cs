@@ -11,5 +11,9 @@ namespace Trivesta.Data.Repository
     public class RoomMemberRepository : GenericRepository<RoomMember>, IRoomMember
     {
         public RoomMemberRepository(TrivestaContext db) : base(db) { }
+        public async Task<RoomMember> GetByUserID (Guid userID)
+        {
+            return await GetOneBy(p => p.UserID == userID);
+        }
     }
 }

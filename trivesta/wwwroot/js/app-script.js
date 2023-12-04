@@ -1,4 +1,4 @@
-﻿var baseUrl = "";
+﻿var baseUrl = "https://localhost:44359";
 
 function alertSuccess(val) {
     alertThis(val, "success");
@@ -49,11 +49,11 @@ function makePayment(pubKey, ref, amt, email, name) {
     FlutterwaveCheckout({
         public_key: pubKey,
         tx_ref: ref,
-        amount: amt.value,
+        amount: amt,
         currency: "NGN",
         payment_options: "card, banktransfer, ussd",
         //redirect_url: "https://trendycampus.com/funding/CreditWallet",
-        redirect_url: baseUrl+"/funding/CreditWallet",
+        redirect_url: baseUrl+"/manager/CreditWallet",
         meta: {
             source: "docs-inline-test",
             consumer_mac: "92a3-912ba-1192a",
@@ -63,9 +63,20 @@ function makePayment(pubKey, ref, amt, email, name) {
             name: name,
         },
         customizations: {
-            title: "CampusCoins - CC",
+            title: "Trivesta Coins",
             description: "Purchase",
-            logo: baseUrl+"/img/logo1.png",
+            logo: baseUrl+"/assets/images/logo.png",
         },
     });
+}
+
+function IsImageFile(fileInput) {
+    try {
+        fileName = fileInput.files[0].name;
+        var imageExtensions = ['jpg', 'jpeg', 'png']; // Add more extensions if needed
+        var extension = fileName.split('.').pop().toLowerCase();
+        return imageExtensions.includes(extension);
+    } catch (e) {
+        return false;
+    }
 }

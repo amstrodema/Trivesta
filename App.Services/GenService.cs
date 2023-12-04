@@ -2,6 +2,16 @@
 {
     public class GenService
     {
+        public static string Gen10DigitNumCode()
+        {
+            string val = "";
+            for (int i = 0; i < 10; i++)
+            {
+                val += RandomDigit();
+            }
+
+            return val;
+        }
         public static string Gen10DigitCode()
         {
             string val = "";

@@ -17,7 +17,9 @@
 .pointer {
     cursor: pointer
 }
-
+.full{
+    width: 100% !important
+}
 .hidden {
     display: none !important
 }

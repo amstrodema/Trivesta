@@ -12,6 +12,8 @@ namespace Trivesta.Data
             modelBuilder.Entity<Room>().Property(o => o.RoomCost).HasPrecision(14, 2);
             modelBuilder.Entity<Room>().Property(o => o.RentAmt).HasPrecision(14, 2);
             modelBuilder.Entity<CoinTransaction>().Property(o => o.Amount).HasPrecision(14, 2);
+            modelBuilder.Entity<User>().Property(o => o.CoinBonus).HasPrecision(14, 2);
+            modelBuilder.Entity<LoginMonitor>().Property(o => o.GuestCoin).HasPrecision(14, 2);
         }
         public virtual DbSet<CoinTransaction> CoinTransactions { get; set; }
         public virtual DbSet<User> Users { get; set; }

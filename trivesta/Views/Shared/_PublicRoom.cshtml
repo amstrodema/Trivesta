@@ -9,13 +9,16 @@
                     <p>This is like stepping into a vibrant virtual hangout that's open to you and everyone else, including guests.</p>
                 </div>
                 <div class="row">
-                    @if (string.IsNullOrEmpty(Model.t))
+                    @{
+                        var val = Model.Rooms.Where(p => p.RoomTypeTag == "Public");
+                    if (string.IsNullOrEmpty(Model.t))
                     {
-                        <partial name="_RoomList" />
+                        <partial name="_RoomList" model="val"/>
                     }
                     else
                     {
-                        <partial name="_RoomList2" />
+                            <partial name="_RoomList2" model="Model" />
+                    }
                     }
                     @if (string.IsNullOrEmpty(Model.t))
                     {

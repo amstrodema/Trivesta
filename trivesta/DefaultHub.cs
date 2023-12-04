@@ -2,7 +2,7 @@
 
 namespace trivesta
 {
-    public class DefaultHub : Microsoft.AspNetCore.SignalR.Hub
+    public class DefaultHub : Hub
     {
         public async Task JoinRoom(string roomID, string userID, string username)
         {
@@ -20,7 +20,7 @@ namespace trivesta
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
-            //Clients.All.SendAsync("user-disconnected", HubUser._data[Context.ConnectionId]);
+            Clients.All.SendAsync("user-disconnected");
             return base.OnDisconnectedAsync(exception);
         }
     }

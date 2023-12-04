@@ -1,6 +1,6 @@
 ﻿@model Trivesta.Model.ViewModel.RoomsVM
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = Model.Room.Name+" Room";
 }
 
 <div class="push-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -12,19 +12,45 @@
                         <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <small class="bold uppercase text-muted">Public</small>
-                                    <h1 class="bold uppercase">Friendship Room.</h1>
+                                    <small class="bold uppercase text-muted">@Model.RoomType.Name</small>
+                                    <h1 class="bold uppercase">@Model.Room.Name Room.</h1>
+                                    <small>@Model.Room.Description</small>
                                     <hr />
                                     <h2>The rules here are simple</h2>
-                                    <p>Chain App Dev is an app landing page HTML5 template based on Bootstrap v5.1.3 CSS layout provided by TemplateMo, a great website to download free CSS templates.</p>
+                                    @if (!string.IsNullOrEmpty(Model.Room.AgeLimit) && Model.Room.AgeLimit.ToLower() != "none")
+                                    {
+                                        <p>You must be @Model.Room.AgeLimit+ to join this room</p>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Room.GenderLimit) && Model.Room.GenderLimit.ToLower() != "none")
+                                    {
+                                        <p>The room is meant for only the @Model.Room.GenderLimit gender</p>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Room.RelationshipLimit) && Model.Room.RelationshipLimit.ToLower() != "none")
+                                    {
+                                        <p>Only @Model.Room.RelationshipLimit users are allowed</p>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Room.ReligiousLimit) && Model.Room.ReligiousLimit.ToLower() != "none")
+                                    {
+                                        <p>Only Users who practice @Model.Room.ReligiousLimit religion are allowed here</p>
+                                    }                                    
                                 </div>
                                 <div>
-                                    <p class="bold">New members will be charged a one time house fee of 600coins</p>
+                                    <p class="bold">
+                                        New members will be charged
+                                        @if (Model.Room.RentAmt > 0)
+                                        {
+                                            <span> a @Model.Room.RentFreq fee of </span>
+                                        }
+                                        @Model.Room.RentAmt
+                                        <span>
+                                            coins
+                                        </span>
+                                    </p>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="gradient-button">
-                                        <a asp-action="index" asp-controller="rooms" asp-route-t="classy">Create New Room <i class="fa fa-plus"></i></a>
-                                        <a asp-action="chat" asp-controller="room" asp-route-t="classy">Enter This Room <i class="fa fa-plug"></i></a>
+                                        <a asp-action="create" asp-controller="rooms" asp-route-t="@Model.Room.RoomTypeTag">Create New Room <i class="fa fa-plus"></i></a>
+                                        <a asp-action="chat" asp-controller="room" asp-route-roomID="@Model.Room.Tag">Enter This Room <i class="fa fa-plug"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +59,7 @@
                     </div>
                     <div class="col-lg-6 order-1 order-md-2 mb-5">
                         <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                            <img src="assets/images/slider-dec.png" alt="">
+                            <img src="../assets/images/slider-dec.png" alt="">
                         </div>
                     </div> 
                 </div>

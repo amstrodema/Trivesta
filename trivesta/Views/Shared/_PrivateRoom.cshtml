@@ -9,13 +9,16 @@
                     <p>This room is open to you and everyone else, except guests. Owners may or may not demand rent from users</p>
                 </div>
                 <div class="row">
-                    @if (string.IsNullOrEmpty(Model.t))
+                    @{
+                        var val = Model.Rooms.Where(p => p.RoomTypeTag == "Private");
+                        if (string.IsNullOrEmpty(Model.t))
                     {
-                        <partial name="_RoomList" />
+                        <partial name="_RoomList" model="val" />
                     }
                     else
                     {
-                        <partial name="_RoomList2" />
+                            <partial name="_RoomList2" model="Model" />
+                    }
                     }
                     @if (string.IsNullOrEmpty(Model.t))
                     {

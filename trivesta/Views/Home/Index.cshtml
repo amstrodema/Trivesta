@@ -1,4 +1,5 @@
-﻿@using trivesta.Services;
+﻿@model Trivesta.Model.ViewModel.HomeVM
+@using trivesta.Services;
 @inject LoginValidator loginValidator
 @{
     ViewData["Title"] = "Home Page";
@@ -97,7 +98,7 @@
     </div>
 </div>
 
-<partial name="_DefaultRoom" />
+<partial name="_DefaultRoom" model="Model.RoomsVM" />
 
 <div id="clients" class="the-clients">
     <div class="container">
@@ -379,9 +380,9 @@
                         <li>2-Weeks Free Decay Shield</li>
                     </ul>
                     <div class="border-button">
-                        @if (user != null)
+                        @if (user != null && !string.IsNullOrEmpty(user.Email))
                         {
-                            <a onclick="makePayment('@Model.PubKey','@Guid.NewGuid()','1200','@user.Email', '@user.Username')">Purchase This Plan Now</a>
+                            <a onclick="makePayment('@Model.PbKey','@Guid.NewGuid()','1200','@user.Email', '@user.Username')">Purchase This Plan Now</a>
                         }
                     </div>
                 </div>
@@ -401,9 +402,9 @@
                         <li>1-Months Free Decay Shield</li>
                     </ul>
                     <div class="border-button">
-                        @if (user != null)
+                        @if (user != null && !string.IsNullOrEmpty(user.Email))
                         {
-                            <a onclick="makePayment('@Model.PubKey','@Guid.NewGuid()','5000','@user.Email', '@user.Username')">Purchase This Plan Now</a>
+                            <a onclick="makePayment('@Model.PbKey','@Guid.NewGuid()','5000','@user.Email', '@user.Username')">Purchase This Plan Now</a>
                         }
                     </div>
                 </div>
@@ -423,8 +424,8 @@
                         <li>3-Months Free Decay Shield</li>
                     </ul>
                     <div class="border-button">
-                        @if(user != null){
-                            <a onclick="makePayment('@Model.PubKey','@Guid.NewGuid()','15000','@user.Email', '@user.Username')">Purchase This Plan Now</a>
+                        @if(user != null && !string.IsNullOrEmpty(user.Email)){
+                            <a onclick="makePayment('@Model.PbKey','@Guid.NewGuid()','15000','@user.Email', '@user.Username')">Purchase This Plan Now</a>
                         }                        
                     </div>
                 </div>

@@ -16,7 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
-
+.text-white{
+    color:white !important
+}
 
 .right-image img {
     width: 30em
@@ -30,16 +32,16 @@ body {
     height:6.5em;
     white-space:nowrap !important;
     overflow:hidden;
-    padding-left:0 !important;
-    padding-right:0 !important
 }
 .forceGraft .box-item:hover{
    background-color: rgba(255,255,255,0.8)
 }
-
+.box-item {
+    white-space: nowrap !important;
+    overflow:hidden;
+}
 
 .forceGraft {
-   
 }
 .chatHolder {
     overflow-y: scroll;
@@ -86,6 +88,22 @@ body {
     box-shadow: none !important;
     background-color: #eee;
 }
-.room-form input{
-    margin-bottom:0.5em
+.chat-alert{
+
+}
+.chat-alert{
+    text-align:center
+}
+.chat-alert span{
+    background-color: #eee;
+    padding: 0.5em 1em;
+    border-radius:2em;
+    font-size:12px
+}
+.room-form input {
+    margin-bottom: 0.5em
+}
+.user_register input, .user_login input {
+    margin-top: 0.3em;
+    width:100% !important
 }

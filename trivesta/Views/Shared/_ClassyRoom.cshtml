@@ -10,13 +10,16 @@
                     <p>Higher standard for users who appreciate elevated vibes. It's a space where exclusivity meets sophistication. The Bars are high!</p>
                 </div>
                 <div class="row">
-                    @if (string.IsNullOrEmpty(Model.t))
+                    @{
+                        var val = Model.Rooms.Where(p => p.RoomTypeTag == "Classy");
+                    if (string.IsNullOrEmpty(Model.t))
                     {
-                        <partial name="_RoomList" />
+                        <partial name="_RoomList" model="val" />
                     }
                     else
                     {
-                        <partial name="_RoomList2" />
+                            <partial name="_RoomList2" model="Model" />
+                    }
                     }
                     @if (string.IsNullOrEmpty(Model.t))
                     {

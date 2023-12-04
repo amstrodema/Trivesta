@@ -1,52 +1,63 @@
 ﻿@model Trivesta.Model.ViewModel.RoomsVM
+@using trivesta.Services;
+@inject LoginValidator loginValidator
 @{
     ViewData["Title"] = "Create New Room";
+    var user = await loginValidator.GetUserAuth();
 }
 
 <div class="push-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <form id="createformID">
+                @* enctype="multipart/form-data"*@
+                <form asp-action="post" asp-controller="rooms" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-6 order-2 order-md-1 align-self-center">
                             <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                                 <div class="row room-form">
                                     <div class="col-lg-12">
-                                        <small class="bold uppercase text-muted">Public - Users and Guests can join</small>
+                                        <small class="bold uppercase text-muted">@Model.RoomType.Name - @Model.RoomType.Description</small>
                                         <hr />
-
-                                        <input class="form-control" placeholder="Room Name" required />
+                                        <input class="hidden" name="Room.RoomTypeTag" value="@Model.RoomType.Tag" />
+                                        <input class="form-control" placeholder="Room Name" name="Room.Name" required />
                                         <div class="row mb-2">
                                             <div class="col-6">
-                                                <select class="form-control" onchange="ChangedRentType()" id="rentType" required>
+                                                <select class="form-control" onchange="ChangedRentType()" name="Room.IsFree" id="rentType" required>
                                                     <option value="">- Select Rent Type -</option>
                                                     <option value="true">Free Entry</option>
                                                     <option value="false">Paid Entry</option>
                                                 </select>
                                             </div>
                                             <div class="col-6 hidden" id="roomCostHolder">
-                                                <input class="form-control" placeholder="Room Amount" id="roomCostVal" min="1" value="@Model.Cost" onblur="Validate()" type="number" />
+                                                <input class="form-control" placeholder="Room Amount" id="roomCostVal" name="Room.RoomCost" min="1" value="@Model.RoomType.Cost" onblur="Validate()" type="number" />
                                             </div>
                                             <div class="col-6 hidden" id="rentFrequencyHolder">
-                                                <select class="form-control" id="rentFrequency">
+                                                <select class="form-control" id="rentFrequency" name="Room.RentFreq">
                                                     <option value="">- Select Rent Frequency -</option>
                                                     <option value="Lifetime">Lifetime</option>
-                                                    <option value="Hourly">Hourly</option>
-                                                    <option value="Daily">Daily</option>
                                                     <option value="Weekly">Weekly</option>
+                                                    <option value="Daily">Daily</option>
+                                                    <option value="Hourly">Hourly</option>
                                                 </select>
                                             </div>
 
                                             <div class="col-6 ">
-                                                <input class="form-control" placeholder="Rent Amount" id="rent" onblur="Validate()" type="number" required />
+                                                <input class="form-control" placeholder="Rent Amount" id="rent" onblur="Validate()" name="Room.RentAmt" type="number" required />
                                             </div>
                                         </div>
-                                        <textarea class="form-control mb-3" placeholder="Room Description" required></textarea>
-                                        <select class="form-control" id="genderLimit" required>
-                                            <option value="false">Not Default</option>
-                                            <option value="true">Default Room</option>
-                                        </select>
+                                        <textarea class="form-control mb-3" placeholder="Room Description" name="Room.Description" required></textarea>
+                                        <div class="mb-3">
+                                            <input type="file" class="form-control" name="image" required/>
+                                            <small>You may upload a room image</small>
+                                        </div>
+                                        @if (user != null && user.IsAdmin)
+                                        {
+                                            <select class="form-control" name="Room.IsDefault">
+                                                <option value="false">Not Default</option>
+                                                <option value="true">Default Room</option>
+                                            </select>
+                                        }
                                     </div>
                                     <div>
                                         <p>
@@ -58,8 +69,8 @@
                                     <div class="col-lg-12">
                                         <div class="gradient-button">
                                             <a asp-action="index" asp-controller="room" asp-route-t="classy">Random Room <i class="fa fa-plug"></i></a>
-                                            <label for="submmitBtn"><a class="pointer">Create Room <i class="fa fa-plus"></i></a></label>
-                                            <button type="submit" class="hidden" id="submmitBtn" onsubmit="return(Validate())"></button>
+                                            <label for="submitBtn"><a class="pointer">Create Room <i class="fa fa-plus"></i></a></label>
+                                            <button type="submit" class="hidden" id="submitBtn" onsubmit="return(Validate())">Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +91,7 @@
 </div>
 
 <script>
-    var cost = '@Model.Cost';
+    var cost = '@Model.RoomType.Cost';
 
     function Validate(){
         var maxRent = document.getElementById("maxRent");

@@ -71,6 +71,14 @@ namespace Trivesta.Data.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Guest")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("GuestCoin")
+                        .HasPrecision(14, 2)
+                        .HasColumnType("decimal(14,2)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -205,9 +213,11 @@ namespace Trivesta.Data.Migrations
                     b.Property<bool>("IsBarred")
                         .HasColumnType("bit");
 
-                    b.Property<string>("IsDefault")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFake")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsFree")
                         .HasColumnType("bit");
@@ -269,8 +279,14 @@ namespace Trivesta.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Duration")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("RoomID")
                         .HasColumnType("uniqueidentifier");
@@ -302,6 +318,9 @@ namespace Trivesta.Data.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DecayGraceInMinutes")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -311,6 +330,18 @@ namespace Trivesta.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsApprovalRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMustBeUser")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMustCharge")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMustLogIn")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("ModifiedBy")
@@ -356,17 +387,15 @@ namespace Trivesta.Data.Migrations
                     b.Property<Guid>("AppCode")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CoinBonus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("CoinBonus")
+                        .HasPrecision(14, 2)
+                        .HasColumnType("decimal(14,2)");
 
-                    b.Property<string>("DOB")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("DateCreated")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -405,6 +434,18 @@ namespace Trivesta.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordVer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReferredBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Religion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

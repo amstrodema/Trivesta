@@ -11,5 +11,9 @@ namespace Trivesta.Data.Repository
     public class CoinTransactionRepository : GenericRepository<CoinTransaction>, ICoinTransaction
     {
         public CoinTransactionRepository(TrivestaContext db) : base(db) { }
+        public async Task<IEnumerable<CoinTransaction>> GetByUserID(Guid userID)
+        {
+            return await GetBy(p => p.UserID == userID);
+        }
     }
 }

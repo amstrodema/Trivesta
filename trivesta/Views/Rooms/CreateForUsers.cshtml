@@ -1,51 +1,58 @@
 ﻿@model Trivesta.Model.ViewModel.RoomsVM
+@using trivesta.Services;
+@inject LoginValidator loginValidator
 @{
     ViewData["Title"] = "Create New Room";
+    var user = await loginValidator.GetUserAuth();
 }
 
 <div class="push-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <form id="createformID">
+                <form asp-action="post" asp-controller="rooms" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-6 order-2 order-md-1 align-self-center">
                             <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                                 <div class="row room-form">
                                     <div class="col-lg-12">
-                                        <small class="bold uppercase text-muted">Public - Users and Guests can join</small>
+                                        <small class="bold uppercase text-muted">@Model.RoomType.Name - @Model.RoomType.Description</small>
                                         <hr />
 
-                                        <input class="form-control" placeholder="Room Name" required />
+                                        <input class="hidden" name="Room.RoomTypeTag" value="@Model.RoomType.Tag" />
+                                        <input class="form-control" placeholder="Room Name" name="Room.Name" required />
                                         <div class="row mb-3">
                                             <div class="col-6">
-                                                <select class="form-control" onchange="ChangedRentType()" id="rentType" required>
-                                                    <option value="">- Select Rent Type -</option>
-                                                    <option value="true">Free Entry</option>
+                                                <select class="form-control" onchange="ChangedRentType()" name="Room.IsFree" id="rentType" required>
+                                                    @if (!Model.RoomType.IsMustCharge)
+                                                    {
+                                                        <option value="">- Select Rent Type -</option>
+                                                        <option value="true">Free Entry</option>
+                                                    }
                                                     <option value="false">Paid Entry</option>
                                                 </select>
                                             </div>
                                             <div class="col-6 hidden" id="roomCostHolder">
-                                                <input class="form-control" placeholder="Room Amount" id="roomCostVal" min="1" value="@Model.Cost" onblur="Validate()" type="number" />
+                                                <input class="form-control" placeholder="Room Amount" id="roomCostVal" name="Room.RoomCost" min="1" value="@Model.RoomType.Cost" onblur="Validate()" type="number" />
                                             </div>
                                             <div class="col-6 hidden" id="rentFrequencyHolder">
-                                                <select class="form-control" id="rentFrequency" name="rentFrequency">
+                                                <select class="form-control" id="rentFrequency" name="Room.RentFreq" required>
                                                     <option value="">- Select Rent Frequency -</option>
                                                     <option value="Lifetime">Lifetime</option>
-                                                    <option value="Hourly">Hourly</option>
-                                                    <option value="Daily">Daily</option>
                                                     <option value="Weekly">Weekly</option>
+                                                    <option value="Daily">Daily</option>
+                                                    <option value="Hourly">Hourly</option>
                                                 </select>
                                             </div>
 
                                             <div class="col-6 ">
-                                                <input class="form-control" placeholder="Rent Amount" id="rent" onblur="Validate()" type="number" required />
+                                                <input class="form-control" placeholder="Rent Amount" id="rent" onblur="Validate()" name="Room.RentAmt" type="number" required />
                                             </div>
                                         </div>
-                                        <textarea class="form-control mb-3" placeholder="Room Description" required></textarea>
+                                        <textarea class="form-control mb-3" placeholder="Room Description" name="Room.Description" required></textarea>
                                         <div class="row mb-1">
                                             <div class="col-6">
-                                                <select class="form-control" id="relationshipLimit" required>
+                                                <select class="form-control" id="relationshipLimit" name="Room.RelationshipLimit" required>
                                                     <option value="">- Relationship Limit -</option>
                                                     <option value="None">None</option>
                                                     <option value="Single">Single</option>
@@ -54,7 +61,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-6">
-                                                <select class="form-control" id="ageLimit" required>
+                                                <select class="form-control" id="ageLimit" name="Room.AgeLimit" required>
                                                     <option value="">- Age Limit -</option>
                                                     <option value="None">None</option>
                                                     <option value="18">18+</option>
@@ -65,7 +72,7 @@
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col-6">
-                                                <select class="form-control" id="genderLimit" required>
+                                                <select class="form-control" name="Room.ReligiousLimit" required>
                                                     <option value="">- Religious Limit -</option>
                                                     <option value="None">None</option>
                                                     <option value="Christianity">Christianity</option>
@@ -74,7 +81,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-6">
-                                                <select class="form-control" id="genderLimit" required>
+                                                <select class="form-control" id="genderLimit" name="Room.GenderLimit" required>
                                                     <option value="">- Gender Limit -</option>
                                                     <option value="None">None</option>
                                                     <option value="Male">Male</option>
@@ -83,13 +90,17 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="file" class="form-control" />
+                                            <input type="file" class="form-control" name="image" required/>
                                             <small>You may upload a room image</small>
                                         </div>
-                                        <select class="form-control" id="genderLimit" required>
-                                            <option value="false">Not Default</option>
-                                            <option value="true">Default Room</option>
-                                        </select>
+                                        @if (user != null && user.IsAdmin)
+                                        {
+                                            <select class="form-control" name="Room.IsDefault">
+                                                <option value="false">Not Default</option>
+                                                <option value="true">Default Room</option>
+                                            </select>
+                                        }
+                                       
                                     </div>
                                     <div>
                                         <p>
@@ -123,7 +134,20 @@
 </div>
 
 <script>
-    var cost = '@Model.Cost';
+    var cost = '@Model.RoomType.Cost';
+    var holdCost = '@Model.RoomType.Cost';
+    var isMustCharge = "@Model.RoomType.IsMustCharge";
+
+    if (isMustCharge == "True") {
+        var roomCostHolder = document.getElementById("roomCostHolder");
+        var rentFrequencyHolder = document.getElementById("rentFrequencyHolder");
+        var roomCost = document.getElementById("roomCost");
+
+
+        rentFrequencyHolder.classList.remove("hidden")
+        roomCostHolder.classList.remove("hidden")
+        roomCost.innerText = cost;
+    }
 
     function Validate() {
         var maxRent = document.getElementById("maxRent");
@@ -137,6 +161,13 @@
         if (cost < 1) {
             cost = 1;
             roomCostVal.value = 1;
+            roomCost.innerText = cost;
+        }
+
+        if (isMustCharge == "True" && cost < holdCost) {
+            cost = holdCost;
+            roomCost.innerText = cost;
+            roomCostVal.value = cost;
         }
 
         if (rentType.value != "false") {

@@ -11,5 +11,9 @@ namespace Trivesta.Data.Repository
     public class RoomTypeRepository : GenericRepository<RoomType>, IRoomType
     {
         public RoomTypeRepository(TrivestaContext db) : base(db) { }
+        public async Task<RoomType> GetByTag (string tag)
+        {
+            return await GetOneBy(p=> p.Tag== tag);
+        }
     }
 }

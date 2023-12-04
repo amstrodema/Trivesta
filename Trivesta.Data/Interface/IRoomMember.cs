@@ -9,5 +9,6 @@ namespace Trivesta.Data.Interface
 {
     public interface IRoomMember : IGeneric<RoomMember>
     {
+        Task<RoomMember> GetByUserID(Guid userID);
     }
 }

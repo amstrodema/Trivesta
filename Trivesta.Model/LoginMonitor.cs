@@ -6,6 +6,8 @@
         public Guid UserID { get; set; }
         public DateTime TimeLogged { get; set; }
         public Guid ClientCode { get; set; }
+        public string Guest { get; set; } = string.Empty;
+        public decimal GuestCoin { get; set; }
 
         public bool IsApproved { get; set; }
         public bool IsActive { get; set; }

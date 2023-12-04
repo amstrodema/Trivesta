@@ -9,13 +9,17 @@
                     <p>Cozy corners designed just for you. Intimate one-on-one or small group conversations, ensuring a confidential setting for personal talks</p>
                 </div>
                 <div class="row">
-                    @if (string.IsNullOrEmpty(Model.t))
+                    @{
+                        var val = Model.Rooms.Where(p => p.RoomTypeTag == "Personal");
+                        if (string.IsNullOrEmpty(Model.t))
                     {
-                        <partial name="_RoomList" />
+                       
+                        <partial name="_RoomList" model="val" />
                     }
                     else
                     {
-                        <partial name="_RoomList2" />
+                            <partial name="_RoomList2" model="Model" />
+                    }
                     }
                     @if (string.IsNullOrEmpty(Model.t))
                     {
