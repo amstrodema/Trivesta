@@ -13,24 +13,19 @@
                     <div class="col-lg-8 order-2 order-md-1 mb-5">
                         <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12" id="focus">
                                     <small class="bold uppercase text-muted">Public</small>
                                     <h1 class="bold uppercase">@Model.Room.Name Room.</h1>
                                     <small>@Model.Room.Description</small>
                                     <hr />
-                                   <div class="chatHolder">
+                                    <div class="chatHolder">
                                         <div class="chatboard" id="chatboard">
                                            
                                         </div>
                                    </div>
                                 </div>
                              
-                                <div class="col-lg-12">
-                                    <div class="gradient-button chatInput">
-                                        <input type="text" name="address" class="form-control" id="messageInput" placeholder="Type message here..." autocomplete="on" required>
-                                        <a id="sendButton">Send <i class="fa fa-send"></i></a>
-                                    </div>
-                                </div>
+                           
                             </div>
                       
                         </div>
@@ -46,6 +41,29 @@
     
     </div>
 </div>
+
+<script>
+   
+    //<div class="col-lg-12">
+    //                           <div class="gradient-button chatInput">
+    //                               <input type="text" name="address" class="form-control" id="messageInput" placeholder="Type message here..." autocomplete="on" required>
+    //                               <a id="sendButton">Send <i class="fa fa-send"></i></a>
+    //                           </div>
+    //                       </div>
+    var div1 = document.createElement("section");
+    var div2 = document.createElement("section");
+    div1.classList.add("col-12");
+    div1.classList.add("chatInputHolder");
+    div1.classList.add("chatInput");
+    //div1.classList.add("gradient-button");
+    div2.innerHTML = '<input type="text" name="address" class="form-control" id="messageInput" placeholder="Type message here..." autocomplete="on" required>' + '<button id="sendButton" class="btn chatBtn"><i class="fa fa-rss"></i></button>' + '<span class="coinBalDisplay"><span id="coinBalDisplay">0</span>&nbsp;<i class="fa fa-cubes"></i></span>' + '<a href="#focus" class="sort-icon"><i class="fa fa-sort-up"></i></span>';
+    //var chatSend = '<a id="sendButton">Send <i class="fa fa-send"></i></a>';
+    div1.appendChild(div2);
+    document.getElementById("alertMe").append(div1)
+
+    var coinBalDisplay = document.getElementById("coinBalDisplay");
+    coinBalDisplay.innerText = "@loginValidator.GetUser().CoinBonus"
+</script>
 
 @section scripts{
     <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
@@ -126,6 +144,10 @@
 
             document.getElementById("chatboard").prepend(section);
 
+
+            if ('@loginValidator.GetUser().Username' == user) {
+                document.getElementById("messageInput").value = "";
+            }
             //if (user === "") {
             //    var p = document.createElement("p");
             //    var span = document.createElement("span");
@@ -162,13 +184,15 @@
                 chat features starts
          */
         document.getElementById("sendButton").addEventListener("click", function (event) {
-            var user = "@loginValidator.GetUser().Username";
-            var message = document.getElementById("messageInput").value;
+            if (document.getElementById("messageInput").value != "") {
+                var user = "@loginValidator.GetUser().Username";
+                var message = document.getElementById("messageInput").value;
 
-            connection.invoke("SendMessage", user, message).catch(function (err) {
-                return console.error(err.toString());
-            });
-            event.preventDefault();
+                connection.invoke("SendMessage", user, message).catch(function (err) {
+                    return console.error(err.toString());
+                });
+                event.preventDefault();
+            }
         });
     </script>
 }       

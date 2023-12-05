@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using trivesta.Services;
 using Trivesta.Business;
+using Trivesta.Model;
 
 namespace trivesta.Controllers
 {
@@ -19,6 +20,7 @@ namespace trivesta.Controllers
         [Route("/room")]
         public async Task<IActionResult> Index(string t)
         {
+            var user = _loginValidator.GetUser();
             if (string.IsNullOrEmpty(t))
             {
                 return RedirectToAction("Index", "Rooms");
@@ -26,6 +28,27 @@ namespace trivesta.Controllers
 
             var val = await _roomBusiness.GetRoomVM(t);
             if (val.Room == null) { return RedirectToAction("Index", "Rooms"); }
+
+            if (user == null)
+            {
+                if (string.IsNullOrEmpty(t))
+                {
+                    return RedirectToAction("Index", "Rooms");
+                }
+
+                var rez = await _userBusiness.Guest();
+                if (rez.StatusCode != 200)
+                {
+                    TempData["MessageError"] = rez.Message;
+                    return RedirectToAction("Index", new { t = t });
+                }
+                else
+                {
+                    _loginValidator.SetSession("user", JsonConvert.SerializeObject(rez.Data));
+                    user = rez.Data;
+                }
+                //return View("Guest");
+            }
 
             return View(val);
         }
@@ -43,21 +66,12 @@ namespace trivesta.Controllers
 
             if (user == null)
             {
-                var rez = await _userBusiness.Guest();
-                if (rez.StatusCode != 200)
-                {
-                    TempData["MessageError"] = rez.Message;
-                    return RedirectToAction("Index", new { t = roomID });
-                }
-                else
-                {
-                    _loginValidator.SetSession("user", JsonConvert.SerializeObject(rez.Data));
-                    user = rez.Data;
-                }
-                //return View("Guest");
+                return RedirectToAction("Index", new { t = roomID });
             }
 
-            var res = await _roomBusiness.ChatRoomsVM(roomID, user);
+            var tuple = await _roomBusiness.ChatRoomsVM(roomID, user);
+            var res = tuple.Item2;
+            _loginValidator.SetSession("user", JsonConvert.SerializeObject(tuple.Item1));
 
             if (res.StatusCode != 200)
             {

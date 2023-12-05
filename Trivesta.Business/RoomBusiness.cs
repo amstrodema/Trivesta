@@ -160,9 +160,10 @@ namespace Trivesta.Business
             return responseMessage;
         }
 
-        public async Task<ResponseMessage<RoomsVM>> ChatRoomsVM(string roomCode, User thisUser)
+        public async Task<(User, ResponseMessage<RoomsVM>)> ChatRoomsVM(string roomCode, User thisUser)
         {
             ResponseMessage<RoomsVM> responseMessage = new ResponseMessage<RoomsVM>();
+            var tuple = (thisUser, responseMessage);
             try
             {
                 RoomsVM roomsVM = new RoomsVM();
@@ -171,7 +172,7 @@ namespace Trivesta.Business
                 {
                     responseMessage.StatusCode = 201;
                     responseMessage.Message = "Room not found or inactive";
-                    return responseMessage;
+                    return tuple;
                 }
 
                 var roomType = await GetType(room.RoomTypeTag);
@@ -186,7 +187,7 @@ namespace Trivesta.Business
                 {
                     responseMessage.StatusCode = 201;
                     responseMessage.Message = "Session expired!";
-                    return responseMessage;
+                    return tuple;
                 }
 
                 if (roomType.IsApprovalRequired)
@@ -196,7 +197,7 @@ namespace Trivesta.Business
                     {
                         responseMessage.StatusCode = response.StatusCode;
                         responseMessage.Message = response.Message;
-                        return responseMessage;
+                        return tuple;
                     }
                 }
                 else
@@ -207,24 +208,25 @@ namespace Trivesta.Business
                         {
                             responseMessage.StatusCode = 201;
                             responseMessage.Message = "Complete profile required";
-                            return responseMessage;
+                            return tuple;
                         }
                     }
-                    if (room.RentAmt > 0)
+
+                    if (room.RentAmt > 0 && checkUser == null)
                     {
                         var res = await ChargeForRooms(room, thisUser, monitor);
                         if (!res)
                         {
                             responseMessage.StatusCode = 201;
                             responseMessage.Message = "Insufficient coins";
-                            return responseMessage;
+                            return tuple;
                         }
 
                         if (await _unitOfWork.Commit() < 1)
                         {
                             responseMessage.StatusCode = 201;
                             responseMessage.Message = "Access denied!";
-                            return responseMessage;
+                            return tuple;
                         }
                     }
                 }
@@ -249,8 +251,9 @@ namespace Trivesta.Business
                 responseMessage.StatusCode = 209;
                 responseMessage.Message = "Failed";
             }
-
-            return responseMessage;
+            tuple.Item1 = thisUser;
+            tuple.Item2 = responseMessage;
+            return tuple;
         }
         private async Task<ResponseMessage<string>> HandlePersonalGroup( User thisUser, Room room, RoomType roomType, RoomMember checkUser, LoginMonitor monitor)
         {
